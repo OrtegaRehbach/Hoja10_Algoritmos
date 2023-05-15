@@ -32,6 +32,6 @@ public class Edge <E extends Comparable<E>> implements Comparable<Edge <E>>{
 
     @Override
     public String toString() {
-        return "Edge [dest=" + dest + ", weight=" + weight + "]";
+        return "Edge [dest=" + dest.label + ", weight=" + weight + "]";
     }
 }
