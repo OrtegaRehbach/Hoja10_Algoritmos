@@ -30,7 +30,6 @@ public class Graph <E extends Comparable<E>> {
         Vertex<E> v1 = new Vertex<E>(label1);
         Vertex<E> v2 = new Vertex<E>(label2);
         adjVertices.get(v1).add(new Edge<E>(v2, weight));
-        // adjVertices.get(v2).add(v1);
     }
 
     public void removeEdge(E label1, E label2) {
@@ -39,7 +38,7 @@ public class Graph <E extends Comparable<E>> {
         List<Edge<E>> eV1 = adjVertices.get(v1);
         // List<Vertex<E>> eV2 = adjVertices.get(v2);
         if (eV1 != null)
-            eV1.remove(v2);
+            eV1.remove(new Edge<E>(v2));
         // if (eV2 != null)
         //     eV2.remove(v1);
     }
