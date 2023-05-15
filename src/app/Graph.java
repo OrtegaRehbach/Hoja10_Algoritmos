@@ -21,10 +21,9 @@ public class Graph <E extends Comparable<E>> {
     public void removeVertex(E label) {
         Vertex<E> v = new Vertex<E>(label);
         adjVertices.values().stream().forEach(e -> {
-            // TODO: Cambiar para ser compatible con nueva implementación de Edge
-            e.remove(new Edge<E>(v, 0));
+            e.remove(new Edge<E>(v));
         });
-        adjVertices.remove(new Vertex<E>(label));
+        adjVertices.remove(v);
     }
 
     public void addEdge(E label1, E label2, int weight) {
@@ -51,6 +50,10 @@ public class Graph <E extends Comparable<E>> {
                 System.out.println(String.format("'%s' is connected to '%s' with weight '%d'", vertex.label, edge.dest.label, edge.weight));
             }
         }
+    }
+
+    public void printAdjVertices() {
+        System.out.println(adjVertices);
     }
 
     // public List<Vertex<E>> getAdjVertices(E label) {
