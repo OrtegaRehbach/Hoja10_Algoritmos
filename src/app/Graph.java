@@ -1,9 +1,9 @@
 package app;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 // Graph class
 public class Graph <E extends Comparable<E>> {
@@ -11,7 +11,7 @@ public class Graph <E extends Comparable<E>> {
     private Map<Vertex<E>, List<Edge<E>>> adjVertices;
 
     public Graph() {
-        this.adjVertices = new HashMap<Vertex<E>, List<Edge<E>>>();
+        this.adjVertices = new TreeMap<Vertex<E>, List<Edge<E>>>();
     }
 
     public void addVertex(E label) {
@@ -48,7 +48,7 @@ public class Graph <E extends Comparable<E>> {
     public void printGraph() {
         for (Vertex<E> vertex : this.adjVertices.keySet()) {
             for (Edge<E> edge : this.adjVertices.get(vertex)) {
-                System.out.println(String.format("'%s' is connected to '%s' with weight '%d'", vertex.label, edge.dest, edge.weight));
+                System.out.println(String.format("'%s' is connected to '%s' with weight '%d'", vertex.label, edge.dest.label, edge.weight));
             }
         }
     }
