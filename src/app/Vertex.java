@@ -11,4 +11,9 @@ public class Vertex <E extends Comparable<E>> implements Comparable<Vertex <E>> 
     public int compareTo(Vertex<E> o) {
         return this.label.compareTo(o.label);
     }
+
+    @Override
+    public String toString() {
+        return "Vertex: '" + this.label + "'";
+    }
 }
