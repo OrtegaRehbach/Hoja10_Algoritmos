@@ -32,6 +32,12 @@ public class Graph <E extends Comparable<E>> {
         adjVertices.get(v1).add(new Edge<E>(v2, weight));
     }
 
+    public void addEdge(E labelSrc, E labelDest, int timeNormal, int timeRain, int timeSnow, int timeStorm) {
+        Vertex<E> v1 = new Vertex<E>(labelSrc);
+        Vertex<E> v2 = new Vertex<E>(labelDest);
+        adjVertices.get(v1).add(new Edge<E>(v2, timeNormal, timeRain, timeSnow, timeStorm));
+    }
+
     public void removeEdge(E labelSrc, E labelDest) {
         Vertex<E> v1 = new Vertex<E>(labelSrc);
         Vertex<E> v2 = new Vertex<E>(labelDest);
