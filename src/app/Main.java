@@ -1,5 +1,7 @@
 package app;
 
+import java.io.IOException;
+
 public class Main {
     public static void main(String[] args) {
         Graph<String> graph = new Graph<String>();
@@ -20,6 +22,16 @@ public class Main {
 
         System.out.println("Adjacency Matrix:");
         graph.printAdjacencyMatrix();
+
+        System.out.println("");
+        System.out.println("Read graph:");
+        FileHandler fh = new FileHandler();
+        try {
+            Graph<String> readGraph = fh.readGraphFromFile("./res/logistica.txt");
+            readGraph.printGraph();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }
