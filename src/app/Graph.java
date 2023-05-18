@@ -26,21 +26,53 @@ public class Graph <E extends Comparable<E>> {
         adjVertices.remove(v);
     }
 
-    public void addEdge(E label1, E label2, int weight) {
-        Vertex<E> v1 = new Vertex<E>(label1);
-        Vertex<E> v2 = new Vertex<E>(label2);
+    public void addEdge(E labelSrc, E labelDest, int weight) {
+        Vertex<E> v1 = new Vertex<E>(labelSrc);
+        Vertex<E> v2 = new Vertex<E>(labelDest);
         adjVertices.get(v1).add(new Edge<E>(v2, weight));
     }
 
-    public void removeEdge(E label1, E label2) {
-        Vertex<E> v1 = new Vertex<E>(label1);
-        Vertex<E> v2 = new Vertex<E>(label2);
+    public void removeEdge(E labelSrc, E labelDest) {
+        Vertex<E> v1 = new Vertex<E>(labelSrc);
+        Vertex<E> v2 = new Vertex<E>(labelDest);
         List<Edge<E>> eV1 = adjVertices.get(v1);
-        // List<Vertex<E>> eV2 = adjVertices.get(v2);
         if (eV1 != null)
             eV1.remove(new Edge<E>(v2));
-        // if (eV2 != null)
-        //     eV2.remove(v1);
+    }
+
+    public int[][] getAdjacencyMatrix() {
+        int[][] adjMatrix = new int[adjVertices.size()][adjVertices.size()];
+        List<Vertex<E>> vertexList = new ArrayList<>();
+        // LLenar lista de vértices
+        for (Vertex<E> vertex : adjVertices.keySet())
+            vertexList.add(vertex);
+        // LLenar matriz de adyacencia
+        for (int i = 0; i < vertexList.size(); i++) {
+            for (int j = 0; j < vertexList.size(); j++) {
+                List<Edge<E>> edges = adjVertices.get(vertexList.get(j));
+                boolean foundConnection = false;
+                int foundWeight = 0;
+                for (Edge<E> edge : edges) {
+                    if (edge.dest.label.equals(vertexList.get(i).label)) {
+                        foundConnection = true;
+                        foundWeight = edge.weight;
+                        break;
+                    }               
+                }
+                adjMatrix[j][i] = foundConnection ? foundWeight : 999;
+            }
+        }
+        return adjMatrix;
+    }
+
+    public void printAdjacencyMatrix() {
+        for (int[] row : getAdjacencyMatrix()) {
+            System.out.print("[ ");
+            for (int e : row) {
+                System.out.printf("%3d ", e);
+            }
+            System.out.println("]");
+        }
     }
 
     public void printGraph() {
