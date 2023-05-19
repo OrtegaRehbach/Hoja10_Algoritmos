@@ -9,10 +9,12 @@ import java.util.TreeMap;
 public class Graph <E extends Comparable<E>> {
     
     private static int INF = 9999;
+    private int currentTimeCode;
     private Map<Vertex<E>, List<Edge<E>>> adjVertices;
 
     public Graph() {
         this.adjVertices = new TreeMap<Vertex<E>, List<Edge<E>>>();
+        this.currentTimeCode = 0;
     }
 
     public void addVertex(E label) {
@@ -45,6 +47,22 @@ public class Graph <E extends Comparable<E>> {
         List<Edge<E>> eV1 = adjVertices.get(v1);
         if (eV1 != null)
             eV1.remove(new Edge<E>(v2));
+    }
+
+    public void setTime(int timeCode) {
+        for (Vertex<E> vertex : adjVertices.keySet())
+            adjVertices.get(vertex).stream().forEach(e -> e.setTime(timeCode));
+        this.currentTimeCode = timeCode;
+    }
+
+    public String getCurrentTimeString() {
+        switch (currentTimeCode) {
+            case 0: return "Normal";
+            case 1: return "Lluvia";
+            case 2: return "Nieve";
+            case 3: return "Tormenta";
+            default: return "Normal";
+        }
     }
 
     public int[][] getAdjacencyMatrix() {
