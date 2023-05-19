@@ -8,6 +8,7 @@ import java.util.TreeMap;
 // Graph class
 public class Graph <E extends Comparable<E>> {
     
+    private static int INF = 9999;
     private Map<Vertex<E>, List<Edge<E>>> adjVertices;
 
     public Graph() {
@@ -65,7 +66,7 @@ public class Graph <E extends Comparable<E>> {
                         break;
                     }               
                 }
-                adjMatrix[j][i] = foundConnection ? foundWeight : 999;
+                adjMatrix[j][i] = foundConnection ? foundWeight : INF;
             }
         }
         return adjMatrix;
@@ -75,7 +76,7 @@ public class Graph <E extends Comparable<E>> {
         for (int[] row : getAdjacencyMatrix()) {
             System.out.print("[ ");
             for (int e : row) {
-                System.out.printf("%3d ", e);
+                System.out.printf("%3s ", (e == INF) ? "INF" : e);
             }
             System.out.println("]");
         }
@@ -91,6 +92,10 @@ public class Graph <E extends Comparable<E>> {
 
     public void printAdjVertices() {
         System.out.println(adjVertices);
+    }
+
+    public Map<Vertex<E>, List<Edge<E>>> getAdjVertexMap() {
+        return this.adjVertices;
     }
 
     // public List<Vertex<E>> getAdjVertices(E label) {
