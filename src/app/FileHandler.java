@@ -18,17 +18,26 @@ public class FileHandler {
         }
     }
 
-    public void writeArrayToFile(String fileName, int[] array) {
+    public void writeGraphToFile(String fileName, Graph<String> graph) {
         BufferedWriter outputWriter = null;
         try {
             outputWriter = new BufferedWriter(new FileWriter(fileName));
-        
-        for (int i = 0; i < array.length; i++) {
-            outputWriter.write(Integer.toString(array[i]));
-            outputWriter.newLine();
-        }
-        outputWriter.flush();  
-        outputWriter.close();
+
+            for (Vertex<String> vertex : graph.getAdjVertexMap().keySet()) {
+                for (Edge<String> edge : graph.getAdjVertexMap().get(vertex)) {
+                    outputWriter.write(String.format(
+                        "%s %s %d %d %d %d", 
+                        vertex.label, 
+                        edge.dest.label, 
+                        edge.timeNormal, 
+                        edge.timeRain, 
+                        edge.timeSnow,
+                        edge.timeStorm
+                    ));
+                    outputWriter.newLine();
+                }
+            }
+            outputWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
