@@ -91,12 +91,21 @@ public class Graph <E extends Comparable<E>> {
     }
 
     public void printAdjacencyMatrix() {
+        // Print Matrix
+        Object[] keyArray = adjVertices.keySet().toArray();
+        int rowCounter = 0;
         for (int[] row : getAdjacencyMatrix()) {
-            System.out.print("[ ");
+            System.out.printf("v%d  [ ", rowCounter);
             for (int e : row) {
                 System.out.printf("%3s ", (e == INF) ? "INF" : e);
             }
             System.out.println("]");
+            rowCounter++;
+        }
+        System.out.println("");
+        // Print Legend
+        for (int i = 0; i < keyArray.length; i++) {
+            System.out.printf("v%d: %s\n", i, keyArray[i].toString());
         }
     }
 
