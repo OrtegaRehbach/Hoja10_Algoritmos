@@ -47,7 +47,7 @@ public class Main {
                     graph.printGraph();
                     break;
                 case "2":
-                    
+                    graph.printAdjacencyMatrix(graph.floydWarshall());
                     break;
                 case "3":
                     
