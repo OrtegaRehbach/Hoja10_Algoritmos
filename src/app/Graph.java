@@ -85,16 +85,46 @@ public class Graph <E extends Comparable<E>> {
                     }               
                 }
                 adjMatrix[j][i] = foundConnection ? foundWeight : INF;
+                adjMatrix[j][i] = j == i ? 0 : adjMatrix[j][i]; // Si esta en la diagonal, colocar 0 en la matriz
             }
         }
         return adjMatrix;
     }
 
-    public void printAdjacencyMatrix() {
+    public int[][] floydWarshall() {
+        int dist[][] = getAdjacencyMatrix();
+        int i, j, k;
+        /* Add all vertices one by one
+           to the set of intermediate
+           vertices.
+          ---> Before start of an iteration, we have shortest
+               distances between all pairs of vertices such that
+               the shortest distances consider only the vertices in
+               set {0, 1, 2, .. k-1} as intermediate vertices.
+          ----> After the end of an iteration, vertex no. k is added
+                to the set of intermediate vertices and the set
+                becomes {0, 1, 2, .. k} */
+        for (k = 0; k < adjVertices.size(); k++) {
+            // Pick all vertices as source one by one
+            for (i = 0; i < adjVertices.size(); i++) {
+                // Pick all vertices as destination for the above picked source
+                for (j = 0; j < adjVertices.size(); j++) {
+                    // If vertex k is on the shortest path
+                    // from i to j, then update the value of
+                    // dist[i][j]
+                    if (dist[i][k] + dist[k][j] < dist[i][j])
+                        dist[i][j] = dist[i][k] + dist[k][j];
+                }
+            }
+        }
+        return dist;
+    }
+
+    public void printAdjacencyMatrix(int[][] matrix) {
         // Print Matrix
         Object[] keyArray = adjVertices.keySet().toArray();
         int rowCounter = 0;
-        for (int[] row : getAdjacencyMatrix()) {
+        for (int[] row : matrix) {
             System.out.printf("v%d  [ ", rowCounter);
             for (int e : row) {
                 System.out.printf("%3s ", (e == INF) ? "INF" : e);
@@ -111,9 +141,12 @@ public class Graph <E extends Comparable<E>> {
 
     public void printGraph() {
         for (Vertex<E> vertex : this.adjVertices.keySet()) {
-            for (Edge<E> edge : this.adjVertices.get(vertex)) {
-                System.out.println(String.format("'%s' is connected to '%s' with weight '%d'", vertex.label, edge.dest.label, edge.weight));
-            }
+            if (this.adjVertices.get(vertex).size() != 0) {
+                for (Edge<E> edge : this.adjVertices.get(vertex)) {
+                    System.out.println(String.format("'%s' is connected to '%s' with weight '%d'", vertex.label, edge.dest.label, edge.weight));
+                }
+            } else
+                System.out.println(String.format("'%s' has no out-going connections", vertex.label));
         }
     }
 
